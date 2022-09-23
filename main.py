@@ -1,5 +1,35 @@
 import tkinter as tk
-import grid.py
+import pygame
+
+def start_grid(start, end):
+    pygame.init()
+    pygame.display.set_caption("Grid")
+    screen = pygame.display.set_mode((800,400))
+    surface = pygame.Surface((20,20))
+    surface.fill("White")
+    clock = pygame.time.Clock()
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+        # use two loops create row + columns based on row, column turn part of the blocks blue
+        screen.blit(surface,(10,10))
+        pygame.display.update()
+        clock.tick(60)
+
+
+def click_submit():
+    start_entry = start.get()
+    end_entry = end.get()       
+    if(len(end_entry) > 0 and len(start_entry) > 0):
+        root.destroy()
+        start_grid(start_entry, end_entry)
+    else:
+        error = False
+        error_label = tk.Label(bottom_frame, fg = "red", text = "Check Input")
+        error_label.pack()
 
 root = tk.Tk()
 
@@ -11,14 +41,6 @@ bottom_frame.pack(side = "bottom", pady = 5)
 
 mid_frame = tk.Frame(root)
 mid_frame.pack(side = "bottom", pady = 5)
-
-
-def click_submit():
-    start_entry = start.get()
-    end_entry = end.get()       
-    if(len(end_entry) > 0 and len(start_entry) > 0):
-        run(start_entry, end_entry)
-        root.destroy()
 
 start = tk.Entry(frame, width = 8)
 start.pack(side = "left", padx = 6)
